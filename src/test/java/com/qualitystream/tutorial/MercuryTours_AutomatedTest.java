@@ -2,11 +2,14 @@ package com.qualitystream.tutorial;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class MercuryTours_AutomatedTest {
@@ -19,6 +22,12 @@ public class MercuryTours_AutomatedTest {
 	By passwordLocator = By.name("password");
 	By confirmPasswordLocator = By.cssSelector("input[name='confirmPassword']");
 	By registerBtnLocator = By.name("register");
+	
+	By userLocator = By.name("userName");
+	By passLocator = By.name("password");
+	By signInBtnLocator = By.name("login");
+	
+	By homePageLocator = By.xpath("//img[@src='/images/masts/mast_flightfinder.gif']");
 
 	@Before
 	public void setUp() throws Exception {
@@ -60,6 +69,26 @@ public class MercuryTours_AutomatedTest {
 		
 		//3- Confirmar mensaje de usuario registrado
 		
+		//Creo una lista de WebElements, porque hay varios font
+		List<WebElement> fonts = driver.findElements(By.tagName("font"));
+		
+		//En la posicion 6 esta el texto queme interesa
+		assertEquals("Note: Your user name is qualityadmin.", fonts.get(5).getText());
+	}
+	
+	@Test
+	public void signIn() throws InterruptedException {
+		
+		if(driver.findElement(userLocator).isDisplayed()){
+			driver.findElement(userLocator).sendKeys("qualityadmin");
+			driver.findElement(passLocator).sendKeys("pass1");
+			driver.findElement(signInBtnLocator).click();
+			Thread.sleep(2000);
+			
+			assertTrue(driver.findElement(homePageLocator).isDisplayed());
+		}else {
+			System.out.println("Username textBox was not present");
+		}
 	}
 
 }
