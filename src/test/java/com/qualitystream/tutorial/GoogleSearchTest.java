@@ -11,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleSearchTest {
 	
@@ -39,7 +41,13 @@ public class GoogleSearchTest {
 		searchBox.submit();
 		
 		//Delay para que Google recupere los resultados. Esto evita un falso positivo
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		//Explicit wait
+		WebDriverWait ewait = new WebDriverWait(driver, 10);
+		
+		//Condicion por la que estoy esperando
+		ewait.until(ExpectedConditions.titleContains("Introduccion a automation"));
 		
 		assertEquals("Introduccion a automation - Buscar con Google", driver.getTitle());
 	}
