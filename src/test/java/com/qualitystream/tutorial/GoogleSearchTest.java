@@ -49,7 +49,8 @@ public class GoogleSearchTest {
 		//Condicion por la que estoy esperando
 		ewait.until(ExpectedConditions.titleContains("Introduccion a automation"));
 		
-		assertEquals("Introduccion a automation - Buscar con Google", driver.getTitle());
+
+		
 	}
 	
 	@After
